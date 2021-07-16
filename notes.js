@@ -1,6 +1,6 @@
 // for utility methods of the Notes-App
 const fs = require('fs');
-const addNote = function(title, body) {
+const addNote = (title, body) => {
 	const notesArr = loadNote();
 
 	// adding a check if the title of the note already exists
@@ -14,10 +14,32 @@ const addNote = function(title, body) {
 			body: body
 		});
 		saveNote(notesArr);
+		console.log(title + ' is added as a new note');
 	}
 };
 
-const loadNote = function() {
+const rmNote = (title) => {
+	let notesArr = loadNote();
+	if (notesArr.length === 0) {
+		console.log('sorry the note doesn exist');
+		return;
+	}
+	// check if the note that has to be removed exists
+	const isPresent = notesArr.some((curr) => {
+		return curr.title == title;
+	});
+	if (isPresent == true) {
+		notesArr = notesArr.filter((curr) => {
+			if (curr.title != title) return curr;
+		});
+		console.log(title + ' deleted');
+		saveNote(notesArr);
+	} else {
+		console.log('sorry the note doesn exist');
+	}
+};
+
+const loadNote = () => {
 	// get the .json format and return js object
 
 	// using try block to try if the db.json has a [] of notes
@@ -32,12 +54,13 @@ const loadNote = function() {
 	}
 };
 
-const saveNote = function(rawData) {
+const saveNote = (rawData) => {
 	// this function will convert js object to json, to be saved in db.json
 	const data = JSON.stringify(rawData);
 	fs.writeFileSync('./db.json', data);
 };
 
 module.exports = {
-	addNote: addNote
+	addNote: addNote,
+	rmNote: rmNote
 };
