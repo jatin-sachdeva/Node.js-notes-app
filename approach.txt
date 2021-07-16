@@ -1,0 +1,17 @@
+Here is the approach taken to build the application
+
+* Packages used:
+    1. file system package : reaa/write data
+    2. yargs package : parse commands and arguments
+    3. chalk : color the text of CLI
+
+*DB.json as the DB
+    In the application DB.json acts as a DB where all the notes are stored in a array as json
+    format, read write and modify are done directly to this file.
+    
+*Adding a notes
+    command 'add' is setup by yargs command api and the real addition is done by 'addNote'
+    method.
+    A generic function named 'loadNotes' first acces the DB and gets the array of notes,
+
+

@@ -1,22 +1,26 @@
 const yargs = require('yargs');
-
+const fs = require('fs');
+const utils = require('./notes');
 // creating commands using yargs
+// https://github.com/yargs/yargs/blob/master/docs/advanced.md
+/*
+Method 1 for creating yargs command:
+yargs.command(
+	[ 'add [title]', 'a' ],
+	'add note',
+	(yargs) => {
+		yargs.positional('title', {
+			describe: 'title of the note to be added',
+			type: 'string',
+			default: 'new note'
+		});
+	},
+	(argv) => {
+		console.log('adding ' + argv.title);
+	}
+);*/
 
-// yargs.command(
-// 	[ 'add [title]', 'a' ],
-// 	'add note',
-// 	(yargs) => {
-// 		yargs.positional('title', {
-// 			describe: 'title of the note to be added',
-// 			type: 'string',
-// 			default: 'new note'
-// 		});
-// 	},
-// 	(argv) => {
-// 		console.log('adding ' + argv.title);
-// 	}
-// );
-
+// Method 2:
 yargs.command({
 	command: 'add <title> <body>',
 	desc: 'add a new note',
@@ -34,7 +38,7 @@ yargs.command({
 			});
 	},
 	handler: (argv) => {
-		console.log(argv.title + ' is added and the body is ' + argv.body);
+		utils.addNote(argv.title, argv.body);
 	}
 });
 yargs.parse();
