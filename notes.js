@@ -1,5 +1,11 @@
 // for utility methods of the Notes-App
 const fs = require('fs');
+const chalk = require('chalk');
+
+// chalk definations
+const errChalk = chalk.bgRed.bold;
+const successChalk = chalk.bgGreen.black.bold;
+const infoChalk = chalk.bold.inverse;
 
 // add note
 const addNote = (title, body) => {
@@ -9,14 +15,14 @@ const addNote = (title, body) => {
 	const isDuplicate = notesArr.some((curr) => {
 		return curr.title == title;
 	});
-	if (isDuplicate) console.log('note with similar title exists');
+	if (isDuplicate) console.log(errChalk('note with similar title exists'));
 	else {
 		notesArr.push({
 			title: title,
 			body: body
 		});
 		saveNote(notesArr);
-		console.log(title + ' is added as a new note');
+		console.log(successChalk(title + ' is added as a new note!'));
 	}
 };
 
@@ -24,7 +30,7 @@ const addNote = (title, body) => {
 const rmNote = (title) => {
 	let notesArr = loadNote();
 	if (notesArr.length === 0) {
-		console.log('sorry the note doesn exist');
+		console.log(errChalk('sorry the note doesn exist!'));
 		return;
 	}
 	// check if the note that has to be removed exists
@@ -35,16 +41,16 @@ const rmNote = (title) => {
 		notesArr = notesArr.filter((curr) => {
 			if (curr.title != title) return curr;
 		});
-		console.log(title + ' deleted');
+		console.log(successChalk(title + ' has been removed!'));
 		saveNote(notesArr);
 	} else {
-		console.log('sorry the note doesn exist');
+		console.log(errChalk("sorry the note doesn't exist!"));
 	}
 };
 
 // list note
 const listNote = () => {
-	console.log('your saved notes are :');
+	console.log(infoChalk('your saved notes are :'));
 	const notesArr = loadNote();
 	// refractor 1
 	notesArr.forEach((currNote) => {
@@ -57,10 +63,10 @@ const readNote = (title) => {
 	const notesArr = loadNote();
 	const note = notesArr.find((currNote) => currNote.title == title);
 	if (note) {
-		console.log(`${title} contains:`);
+		console.log(infoChalk(`${title} contains:`));
 		console.log(note.body);
 	} else {
-		console.log('note not found');
+		console.log(errChalk("sorry the note doesn't exist!"));
 	}
 };
 
@@ -74,7 +80,7 @@ const loadNote = () => {
 		const data = JSON.parse(rawJsonData);
 		return data;
 	} catch (err) {
-		console.log(err);
+		console.log(errChalk('something went wrong!'));
 		// as no array of notes exist it will return new empty array
 		return [];
 	}
