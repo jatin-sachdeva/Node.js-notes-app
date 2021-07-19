@@ -2,7 +2,7 @@ const yargs = require('yargs');
 const fs = require('fs');
 const utils = require('./notes');
 const { type } = require('os');
-const { rmNote } = require('./notes');
+const { rmNote, listNote } = require('./notes');
 // creating commands using yargs
 // https://github.com/yargs/yargs/blob/master/docs/advanced.md
 /*
@@ -57,6 +57,16 @@ yargs.command({
 	},
 	handler(argv) {
 		rmNote(argv.title);
+	}
+});
+
+// list notes
+yargs.command({
+	command: 'ls',
+	description: 'list all the notes',
+	builder(yargs) {},
+	handler(argv) {
+		listNote();
 	}
 });
 yargs.parse();

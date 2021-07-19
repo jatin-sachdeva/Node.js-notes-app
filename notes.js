@@ -1,5 +1,7 @@
 // for utility methods of the Notes-App
 const fs = require('fs');
+
+// add note
 const addNote = (title, body) => {
 	const notesArr = loadNote();
 
@@ -18,6 +20,7 @@ const addNote = (title, body) => {
 	}
 };
 
+// remove note
 const rmNote = (title) => {
 	let notesArr = loadNote();
 	if (notesArr.length === 0) {
@@ -39,6 +42,15 @@ const rmNote = (title) => {
 	}
 };
 
+// list note
+const listNote = () => {
+	console.log('your saved notes are :');
+	const notesArr = loadNote();
+	// refractor 1
+	notesArr.forEach((currNote) => {
+		console.log(currNote.title);
+	});
+};
 const loadNote = () => {
 	// get the .json format and return js object
 
@@ -62,5 +74,6 @@ const saveNote = (rawData) => {
 
 module.exports = {
 	addNote: addNote,
-	rmNote: rmNote
+	rmNote: rmNote,
+	listNote: listNote
 };
