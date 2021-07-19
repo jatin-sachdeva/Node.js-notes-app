@@ -51,6 +51,20 @@ const listNote = () => {
 		console.log(currNote.title);
 	});
 };
+
+// readNote
+const readNote = (title) => {
+	const notesArr = loadNote();
+	const note = notesArr.find((currNote) => currNote.title == title);
+	if (note) {
+		console.log(`${title} contains:`);
+		console.log(note.body);
+	} else {
+		console.log('note not found');
+	}
+};
+
+// load Note
 const loadNote = () => {
 	// get the .json format and return js object
 
@@ -75,5 +89,6 @@ const saveNote = (rawData) => {
 module.exports = {
 	addNote: addNote,
 	rmNote: rmNote,
-	listNote: listNote
+	listNote: listNote,
+	readNote: readNote
 };

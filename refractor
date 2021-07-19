@@ -1,0 +1,3 @@
+Refractor opportuunites/some possible addOns
+    1. can use fs function.lstat to print type ie file with the listed note name,
+        goto line 48 notes.js
